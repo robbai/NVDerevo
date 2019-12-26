@@ -38,7 +38,6 @@ class CustomDrive:
             local_target = dot(car_to_target, self.car.rotation)
             angle = atan2(local_target[1], local_target[0])
 
-        print(self.kickoff)
         max_speed = self.determine_max_speed(local_target)
 
         self.update_rlu_drive(reverse, max_speed)

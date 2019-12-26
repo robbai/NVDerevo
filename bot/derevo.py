@@ -200,6 +200,7 @@ class Hypebot(BaseAgent):
         self.renderer.end_rendering()
 
     def should_defending(self):
+        return False # Don't.
         """Method which returns a boolean regarding whether we should defend or not"""
         ball = self.info.ball
         car = self.info.my_car

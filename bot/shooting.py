@@ -100,6 +100,7 @@ def shooting_target(agent):
 
 
 def should_dodge(agent):
+    return norm(agent.info.ball.location - agent.info.my_car.location) < 300 and max(dot(agent.info.my_car.velocity, agent.info.ball.location - agent.info.my_car.location), dot(agent.info.my_car.forward(), agent.info.ball.location - agent.info.my_car.location)) > 1300 # Go for it!
     """"Method that checks if we should dodge"""
     car = agent.info.my_car
     their_goal = agent.their_goal
