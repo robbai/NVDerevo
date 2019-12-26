@@ -76,9 +76,12 @@ class Hypebot(BaseAgent):
             #     return
             init_kickoff(self)
             self.prev_kickoff = True
+            self.drive.kickoff = True
         elif self.kickoff or self.step is Step.Dodge_2:
             kick_off(self)
+            self.drive.kickoff = True
         else:
+            self.drive.kickoff = False
             self.get_controls()
         self.render_string(self.step.name)
         # Make sure there is no variance in kickoff setups
@@ -165,12 +168,12 @@ class Hypebot(BaseAgent):
                 self.halfflip.step(self.info.time_delta)
             else:
                 self.dodge.step(self.info.time_delta)
-            if (self.halfflip.finished if halfflipping else self.dodge.finished) and self.info.my_car.on_ground:
+            if self.halfflip.finished if halfflipping else self.dodge.finished:
                 self.step = Step.Catching
             else:
                 self.controls = (self.halfflip.controls if halfflipping else self.dodge.controls)
-                if not halfflipping: self.controls.boost = False
-                self.controls.throttle = velocity_2d(self.info.my_car.velocity) < 500
+                '''if not halfflipping: self.controls.boost = False
+                self.controls.throttle = velocity_2d(self.info.my_car.velocity) < 500'''
         elif self.step is Step.Shooting:
             shooting(self)
 
