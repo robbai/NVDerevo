@@ -115,7 +115,7 @@ class Hypebot(BaseAgent):
     def get_controls(self):
         """Decides what strategy to uses and gives corresponding output"""
         self.drive.power_turn = False
-        if self.step is Step.Steer or self.step is Step.Dodge_2 or self.step is Step.Dodge_1 or self.step is Step.Drive:
+        if self.step is Step.Steer or self.step is Step.Drive:
             self.step = Step.Catching
         if self.step is Step.Catching:
             # Enable power turning for catching, since we don't halfflip
@@ -162,7 +162,7 @@ class Hypebot(BaseAgent):
                 self.dodge.target = self.their_goal.center
         elif self.step is Step.Defending:
             defending(self)
-        elif self.step is Step.Dodge or self.step is Step.HalfFlip:
+        elif self.step in [Step.Dodge, Step.Dodge_1, Step.Dodge_2, Step.HalfFlip]:
             halfflipping = self.step is Step.HalfFlip
             if halfflipping:
                 self.halfflip.step(self.info.time_delta)
@@ -172,8 +172,6 @@ class Hypebot(BaseAgent):
                 self.step = Step.Catching
             else:
                 self.controls = (self.halfflip.controls if halfflipping else self.dodge.controls)
-                '''if not halfflipping: self.controls.boost = False
-                self.controls.throttle = velocity_2d(self.info.my_car.velocity) < 500'''
         elif self.step is Step.Shooting:
             shooting(self)
 
