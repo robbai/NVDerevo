@@ -27,8 +27,9 @@ def shooting(agent):
     agent.drive.target = target
     distance = distance_2d(car.location, target)
     vf = velocity_forward(car)
-    dodge_overshoot = distance < (abs(vf) + 500) * 1.5
-    agent.drive.speed = get_speed(agent, target)
+    dodge_overshoot = distance < (abs(vf) + 500) * 1.4
+    #agent.drive.speed = get_speed(agent, target)
+    agent.drive.speed = 2200
     agent.drive.step(agent.info.time_delta)
     agent.controls = agent.drive.controls
     if agent.defending:
@@ -47,7 +48,7 @@ def shooting(agent):
         agent.step = Step.HalfFlip
         agent.halfflip = HalfFlip(car)
     elif not dodge_overshoot and car.location[2] < 80 and\
-            (agent.drive.speed > abs(vf) + 300 and 1200 < abs(vf) < 2000 and car.boost <= 25):
+            (agent.drive.speed > abs(vf) + 300 and 1200 < abs(vf) < 2000 and car.boost <= 15):
         # Dodge towards the target for speed
         agent.step = Step.Dodge
         agent.dodge = Dodge(car)
